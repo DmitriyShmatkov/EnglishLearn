@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">English Learn</string>
+    <string name="activity_main_play_button_text">Play</string>
+    <string name="splash_screen_text_part_1">English</string>
+    <string name="splash_screen_text_part_2">Learn</string>
+    <string name="vocabulary_fragment_title">Vocabulary</string>
 </resources>
