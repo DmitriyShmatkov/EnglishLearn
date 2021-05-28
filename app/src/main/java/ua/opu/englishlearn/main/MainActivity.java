@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = Objects.requireNonNull(getSupportActionBar());
         actionBar.setTitle(R.string.vocabulary_fragment_title);
 
-        List<Button> bottomNavButtons = new ArrayList<>();
+        List<ImageButton> bottomNavButtons = new ArrayList<>();
         bottomNavButtons.add(findViewById(R.id.vocabularyButton));
         bottomNavButtons.add(findViewById(R.id.statsButton));
 

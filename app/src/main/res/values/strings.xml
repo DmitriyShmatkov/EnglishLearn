@@ -4,4 +4,7 @@
     <string name="splash_screen_text_part_1">English</string>
     <string name="splash_screen_text_part_2">Learn</string>
     <string name="vocabulary_fragment_title">Vocabulary</string>
+    <string name="search_field_placeholder">Search</string>
+    <string name="vocabulary_list_header_text">My words</string>
+    <string name="vocabulary_fab_text">Add</string>
 </resources>

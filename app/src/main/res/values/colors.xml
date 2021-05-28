@@ -22,4 +22,7 @@
     <color name="backgroundTextColor">#000000</color>
     <color name="surfaceTextColor">#000000</color>
     <color name="errorTextColor">#ffffff</color>
+
+    <color name="searchFieldColor">#e0e0e0</color>
+    <color name="placeholderColor">#a2a2a2</color>
 </resources>
