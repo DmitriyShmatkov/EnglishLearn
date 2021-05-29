@@ -19,7 +19,7 @@
         android:hint="@string/search_field_placeholder"
         android:inputType="textPersonName"
         android:paddingLeft="16dp"
-        android:textColor="@color/placeholderColor"
+        android:textColor="@color/black"
         android:textColorHint="@color/placeholderColor"
         android:textSize="22sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -31,14 +31,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".10" />
+        app:layout_constraintGuide_percent=".05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".90" />
+        app:layout_constraintGuide_percent=".95" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -63,6 +63,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/wordAddButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vocabulary_fab_text"

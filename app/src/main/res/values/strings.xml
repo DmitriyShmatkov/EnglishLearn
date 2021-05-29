@@ -8,4 +8,6 @@
     <string name="vocabulary_list_header_text">My words</string>
     <string name="vocabulary_fab_text">Add</string>
     <string name="mini_game_task_text">Choose word matches translation</string>
+    <string name="statistics_fragment_title">Statistics</string>
+    <string name="word_add_fragment_title">New words</string>
 </resources>
