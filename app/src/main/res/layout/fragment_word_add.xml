@@ -8,7 +8,7 @@
     tools:context=".main.fragments.WordAddFragment">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/vocabularySearchEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -50,7 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/vocabularySearchEditText" />
 
     <TextView
         android:id="@+id/textView12"

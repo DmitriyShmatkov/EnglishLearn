@@ -36,7 +36,7 @@
             android:background="@color/surfaceColor">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/wordEnTranslation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -48,7 +48,7 @@
                 tools:text="apple" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/wordRuTranslation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -56,12 +56,12 @@
                 android:textColor="@color/placeholderColor"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView3"
-                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="@+id/wordEnTranslation"
+                app:layout_constraintTop_toBottomOf="@+id/wordEnTranslation"
                 tools:text="яблоко" />
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/wordDeleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
