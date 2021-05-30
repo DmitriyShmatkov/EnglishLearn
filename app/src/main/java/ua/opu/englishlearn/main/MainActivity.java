@@ -16,18 +16,24 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 import ua.opu.englishlearn.R;
 import ua.opu.englishlearn.main.fragments.StatisticsFragment;
 import ua.opu.englishlearn.main.fragments.VocabularyFragment;
 import ua.opu.englishlearn.main.fragments.WordAddFragment;
+import ua.opu.englishlearn.room.database.EnglishLearnDatabase;
+import ua.opu.englishlearn.room.entities.Word;
 
 public class MainActivity extends AppCompatActivity {
 
     ActionBar actionBar;
     List<ImageButton> bottomNavButtons;
+
+    long[] fdasf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +79,25 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.statistics_fragment_title);
             viewPager.setCurrentItem(1, false);
         });
+
+        /*EnglishLearnDatabase database = EnglishLearnDatabase.getInstance(this);
+        List<Word> words = Arrays.asList(
+                new Word("fdas", "fdsaf"),
+                new Word("fdas", "fdsaf"),
+                new Word("fdas", "fdsaf"),
+                new Word("fdas", "fdsaf"),
+                new Word("fdas", "fdsaf")
+        );*/
+        /*final long[] id = new long[1];
+        id[0] = -1;
+        Word word = new Word("fdas", "fdsaf");*/
+        /*Executors.newSingleThreadExecutor().execute(() -> fdasf = database.wordDAO().insertAll(words));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        actionBar.setTitle(Arrays.toString(fdasf));*/
 
     }
 

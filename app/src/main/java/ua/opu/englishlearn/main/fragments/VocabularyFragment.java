@@ -22,16 +22,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executors;
 
 import ua.opu.englishlearn.R;
-import ua.opu.englishlearn.entities.Word;
+import ua.opu.englishlearn.room.database.EnglishLearnDatabase;
+import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.main.MainActivity;
 
 public class VocabularyFragment extends Fragment {
 
     private int position;
     private MainActivity.MainViewPagerAdapter viewPagerAdapter;
-    private final List<Word> words = new ArrayList<>();
+    private List<Word> words = new ArrayList<>();
 
     public VocabularyFragment() {
     }
@@ -56,17 +58,26 @@ public class VocabularyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        /*words.add(new Word("nfsdjkf", "fdsaf"));
         words.add(new Word("nfsdjkf", "fdsaf"));
         words.add(new Word("nfsdjkf", "fdsaf"));
         words.add(new Word("nfsdjkf", "fdsaf"));
         words.add(new Word("nfsdjkf", "fdsaf"));
         words.add(new Word("nfsdjkf", "fdsaf"));
-        words.add(new Word("nfsdjkf", "fdsaf"));
-        words.add(new Word("nfsdjkf", "fdsaf"));
+        words.add(new Word("nfsdjkf", "fdsaf"));*/
+
+        AppCompatActivity activity = Objects.requireNonNull((AppCompatActivity) getActivity());
+        ActionBar actionBar = Objects.requireNonNull(activity.getSupportActionBar());
+
+
+
+//        actionBar.setTitle(words.get(0).getEnglishTranslation());
+        if (words.size() == 0) {
+//            actionBar.setTitle("dsafs");
+        }
+
 
         view.findViewById(R.id.wordAddButton).setOnClickListener(v -> {
-            AppCompatActivity activity = Objects.requireNonNull((AppCompatActivity) getActivity());
-            ActionBar actionBar = Objects.requireNonNull(activity.getSupportActionBar());
             actionBar.setTitle(R.string.word_add_fragment_title);
             Toolbar toolbar = activity.findViewById(R.id.mainActivityToolbar);
 
@@ -81,8 +92,12 @@ public class VocabularyFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.vocabularyRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        VocabularyListAdapter adapter = new VocabularyListAdapter(words);
-        recyclerView.setAdapter(adapter);
+
+        EnglishLearnDatabase database = EnglishLearnDatabase.getInstance(requireContext());
+        Executors.newSingleThreadExecutor().execute(() -> {
+            words = database.wordDAO().getAll();
+            recyclerView.setAdapter(new VocabularyListAdapter(words));
+        });
 
         EditText searchEditText = view.findViewById(R.id.vocabularySearchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -105,7 +120,7 @@ public class VocabularyFragment extends Fragment {
                         recyclerView.setAdapter(searchResultAdapter);
                     }
                 } else {
-                    recyclerView.setAdapter(adapter);
+                    recyclerView.setAdapter(new VocabularyListAdapter(words));
                 }
             }
 
