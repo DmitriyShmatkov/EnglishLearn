@@ -8,11 +8,13 @@ public class Question {
 
     @PrimaryKey(autoGenerate = true)
     private int questionId;
-    private int answerId;
+    private int correctAnswerId;
+    private int userAnswerId;
 
-    public Question(int questionId, int answerId) {
+    public Question(int questionId, int correctAnswerId, int userAnswerId) {
         this.questionId = questionId;
-        this.answerId = answerId;
+        this.correctAnswerId = correctAnswerId;
+        this.userAnswerId = userAnswerId;
     }
 
     public int getQuestionId() {
@@ -23,11 +25,19 @@ public class Question {
         this.questionId = questionId;
     }
 
-    public int getAnswerId() {
-        return answerId;
+    public int getCorrectAnswerId() {
+        return correctAnswerId;
     }
 
-    public void setAnswerId(int answerId) {
-        this.answerId = answerId;
+    public void setCorrectAnswerId(int correctAnswerId) {
+        this.correctAnswerId = correctAnswerId;
+    }
+
+    public int getUserAnswerId() {
+        return userAnswerId;
+    }
+
+    public void setUserAnswerId(int userAnswerId) {
+        this.userAnswerId = userAnswerId;
     }
 }

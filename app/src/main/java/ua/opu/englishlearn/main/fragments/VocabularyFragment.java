@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,12 +69,6 @@ public class VocabularyFragment extends Fragment {
 
         AppCompatActivity activity = Objects.requireNonNull((AppCompatActivity) getActivity());
         ActionBar actionBar = Objects.requireNonNull(activity.getSupportActionBar());
-
-
-//        actionBar.setTitle(words.get(0).getEnglishTranslation());
-        if (words.size() == 0) {
-//            actionBar.setTitle("dsafs");
-        }
 
 
         view.findViewById(R.id.wordAddButton).setOnClickListener(v -> {

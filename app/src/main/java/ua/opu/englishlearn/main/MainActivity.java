@@ -1,5 +1,6 @@
 package ua.opu.englishlearn.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 
 import ua.opu.englishlearn.R;
+import ua.opu.englishlearn.game.GameActivity;
 import ua.opu.englishlearn.main.fragments.StatisticsFragment;
 import ua.opu.englishlearn.main.fragments.VocabularyFragment;
 import ua.opu.englishlearn.main.fragments.WordAddFragment;
@@ -99,6 +101,10 @@ public class MainActivity extends AppCompatActivity {
         }
         actionBar.setTitle(Arrays.toString(fdasf));*/
 
+        findViewById(R.id.playButton).setOnClickListener(v -> {
+            Intent intent = new Intent(this, GameActivity.class);
+            startActivity(intent);
+        });
     }
 
     public class MainViewPagerAdapter extends FragmentStateAdapter {

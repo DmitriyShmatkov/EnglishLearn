@@ -105,25 +105,32 @@ public class WordAddFragment extends Fragment {
             ImageButton addRemoveButton = holder.addRemoveButton;
             if (word.isAdded()) {
                 addRemoveButton.setImageResource(R.drawable.ic_check_circle_outline_black_24dp);
-                holder.addRemoveButton.setOnClickListener(v -> {
-                    word.setAdded(false);
-                    repository.updateWord(word);
-                    addRemoveButton.setImageResource(R.drawable.ic_outline_add_circle_outline_24);
-                });
+                holder.addRemoveButton.setOnClickListener(v -> removeWordListener(word, v));
             } else {
                 addRemoveButton.setImageResource(R.drawable.ic_outline_add_circle_outline_24);
-                holder.addRemoveButton.setOnClickListener(v -> {
-                    word.setAdded(true);
-                    repository.updateWord(word);
-                    addRemoveButton.setImageResource(R.drawable.ic_check_circle_outline_black_24dp);
-                });
+                holder.addRemoveButton.setOnClickListener(v -> addWordListener(word, v));
             }
-
         }
 
         @Override
         public int getItemCount() {
             return words.size();
+        }
+
+        public void addWordListener(Word word, View view) {
+            ImageButton addRemoveButton = (ImageButton) view;
+            word.setAdded(true);
+            repository.updateWord(word);
+            addRemoveButton.setImageResource(R.drawable.ic_check_circle_outline_black_24dp);
+            addRemoveButton.setOnClickListener(v -> removeWordListener(word, v));
+        }
+
+        public void removeWordListener(Word word, View view) {
+            ImageButton addRemoveButton = (ImageButton) view;
+            word.setAdded(false);
+            repository.updateWord(word);
+            addRemoveButton.setImageResource(R.drawable.ic_outline_add_circle_outline_24);
+            addRemoveButton.setOnClickListener(v -> addWordListener(word, v));
         }
 
         class WordAddWordViewHolder extends RecyclerView.ViewHolder {

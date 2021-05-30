@@ -16,23 +16,32 @@ public class QuestionWithOptionsAndAnswer {
     private Question question;
 
     @Relation(
-            parentColumn = "answerId",
-            entityColumn = "wordId"
-    )
-    private Word answer;
-
-    @Relation(
             parentColumn = "questionId",
             entityColumn = "wordId",
             associateBy = @Junction(QuestionWordCrossDef.class)
     )
     private List<Word> options;
 
-    public QuestionWithOptionsAndAnswer(Question question, Word answer, List<Word> options) {
+    @Relation(
+            parentColumn = "correctAnswerId",
+            entityColumn = "wordId"
+    )
+    private Word correctAnswer;
+
+    @Relation(
+            parentColumn = "userAnswerId",
+            entityColumn = "wordId"
+    )
+    private Word userAnswer;
+
+
+    public QuestionWithOptionsAndAnswer(Question question, List<Word> options, Word correctAnswer, Word userAnswer) {
         this.question = question;
-        this.answer = answer;
         this.options = options;
+        this.correctAnswer = correctAnswer;
+        this.userAnswer = userAnswer;
     }
+
 
     public Question getQuestion() {
         return question;
@@ -42,19 +51,27 @@ public class QuestionWithOptionsAndAnswer {
         this.question = question;
     }
 
-    public Word getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(Word answer) {
-        this.answer = answer;
-    }
-
     public List<Word> getOptions() {
         return options;
     }
 
     public void setOptions(List<Word> options) {
         this.options = options;
+    }
+
+    public Word getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(Word correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public Word getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(Word userAnswer) {
+        this.userAnswer = userAnswer;
     }
 }
