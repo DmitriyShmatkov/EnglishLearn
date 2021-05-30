@@ -25,7 +25,8 @@ import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class WordAddFragment extends Fragment {
 
-    List<Word> words = new ArrayList<>();
+    private List<Word> words = new ArrayList<>();
+    private EnglishLearnRepository repository;
 
     public WordAddFragment() {
     }
@@ -45,7 +46,7 @@ public class WordAddFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EnglishLearnRepository repository = EnglishLearnRepository.getInstance(requireContext());
+        repository = EnglishLearnRepository.getInstance(requireContext());
         RecyclerView recyclerView = view.findViewById(R.id.wordAddRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -101,10 +102,22 @@ public class WordAddFragment extends Fragment {
 
             holder.englishTranslation.setText(word.getEnglishTranslation());
             holder.russianTranslation.setText(word.getRussianTranslation());
-            holder.addRemoveButton.setImageResource(word.isAdded() ?
-                    R.drawable.ic_check_circle_outline_black_24dp :
-                    R.drawable.ic_outline_add_circle_outline_24);
-
+            ImageButton addRemoveButton = holder.addRemoveButton;
+            if (word.isAdded()) {
+                addRemoveButton.setImageResource(R.drawable.ic_check_circle_outline_black_24dp);
+                holder.addRemoveButton.setOnClickListener(v -> {
+                    word.setAdded(false);
+                    repository.updateWord(word);
+                    addRemoveButton.setImageResource(R.drawable.ic_outline_add_circle_outline_24);
+                });
+            } else {
+                addRemoveButton.setImageResource(R.drawable.ic_outline_add_circle_outline_24);
+                holder.addRemoveButton.setOnClickListener(v -> {
+                    word.setAdded(true);
+                    repository.updateWord(word);
+                    addRemoveButton.setImageResource(R.drawable.ic_check_circle_outline_black_24dp);
+                });
+            }
 
         }
 

@@ -22,12 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.Executors;
 
 import ua.opu.englishlearn.R;
-import ua.opu.englishlearn.room.database.EnglishLearnDatabase;
-import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.main.MainActivity;
+import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class VocabularyFragment extends Fragment {
@@ -35,6 +33,7 @@ public class VocabularyFragment extends Fragment {
     private int position;
     private MainActivity.MainViewPagerAdapter viewPagerAdapter;
     private List<Word> words = new ArrayList<>();
+    private EnglishLearnRepository repository;
 
     public VocabularyFragment() {
     }
@@ -93,8 +92,33 @@ public class VocabularyFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.vocabularyRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        EnglishLearnRepository repository = EnglishLearnRepository.getInstance(requireContext());
-        words = repository.getAllWords();
+        repository = EnglishLearnRepository.getInstance(requireContext());
+
+        /*List<Word> insertList = Arrays.asList(
+                new Word("apple", "яблоко", false),
+                new Word("orange", "апельсин", false),
+                new Word("banana", "банан", false),
+                new Word("pineapple", "ананас", false),
+                new Word("tomato", "помидор", false),
+                new Word("table", "стол", false),
+                new Word("sugar", "сахар", false),
+                new Word("chair", "стул", false),
+                new Word("pan", "сковорода", false),
+                new Word("sausage", "сосиска", false),
+                new Word("milk", "молоко", false),
+                new Word("teeth", "зубы", false),
+                new Word("mouth", "рот", false),
+                new Word("mouse", "мышь", false),
+                new Word("moist", "влажный", false),
+                new Word("gate", "ворота", false),
+                new Word("bed", "кровать", false),
+                new Word("sofa", "диван", false),
+                new Word("pencil", "карандаш", false),
+                new Word("square", "квадрат", false)
+        );
+        repository.insertAllWords(insertList);*/
+
+        words = repository.getAddedWords();
         recyclerView.setAdapter(new VocabularyListAdapter(words));
 
 
@@ -146,6 +170,12 @@ public class VocabularyFragment extends Fragment {
             Word word = words.get(position);
             holder.englishTranslation.setText(word.getEnglishTranslation());
             holder.russianTranslation.setText(word.getRussianTranslation());
+            holder.deleteButton.setOnClickListener(v -> {
+                word.setAdded(false);
+                repository.updateWord(word);
+                words.remove(word);
+                notifyDataSetChanged();
+            });
         }
 
         @Override

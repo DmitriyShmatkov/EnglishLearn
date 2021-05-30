@@ -1,8 +1,11 @@
 package ua.opu.englishlearn.room.entities;
 
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity
 public class Word {
@@ -11,7 +14,7 @@ public class Word {
     private int wordId;
     private String englishTranslation;
     private String russianTranslation;
-    private boolean isAdded = false;
+    private boolean isAdded;
 
     public Word(int wordId, String englishTranslation, String russianTranslation, boolean isAdded) {
         this.wordId = wordId;
@@ -21,9 +24,10 @@ public class Word {
     }
 
     @Ignore
-    public Word(String englishTranslation, String russianTranslation) {
+    public Word(String englishTranslation, String russianTranslation, boolean isAdded) {
         this.englishTranslation = englishTranslation;
         this.russianTranslation = russianTranslation;
+        this.isAdded = isAdded;
     }
 
     public int getWordId() {
@@ -56,5 +60,13 @@ public class Word {
 
     public void setAdded(boolean added) {
         isAdded = added;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word = (Word) o;
+        return Objects.equals(englishTranslation, word.englishTranslation);
     }
 }

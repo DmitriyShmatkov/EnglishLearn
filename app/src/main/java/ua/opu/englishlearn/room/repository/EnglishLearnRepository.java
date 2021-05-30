@@ -33,10 +33,13 @@ public class EnglishLearnRepository {
         executor.execute(() -> db.wordDAO().insert(word));
     }
 
+    public void insertAllWords(List<Word> words) {
+        executor.execute(() -> db.wordDAO().insertAll(words));
+    }
+
     public List<Word> getAllWords() {
         ExecutorService es = Executors.newSingleThreadExecutor();
         Future<List<Word>> result = es.submit(() -> db.wordDAO().getAll());
-
         try {
             return result.get();
         } catch (Exception e) {
@@ -45,5 +48,26 @@ public class EnglishLearnRepository {
         } finally {
             es.shutdown();
         }
+    }
+
+    public List<Word> getAddedWords() {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<List<Word>> result = es.submit(() -> db.wordDAO().getAdded());
+        try {
+            return result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            es.shutdown();
+        }
+    }
+
+    public void deleteAllWords() {
+        executor.execute(() -> db.wordDAO().deleteAll());
+    }
+
+    public void updateWord(Word word) {
+        executor.execute(() -> db.wordDAO().update(word));
     }
 }
