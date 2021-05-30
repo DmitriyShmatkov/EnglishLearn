@@ -28,6 +28,7 @@ import ua.opu.englishlearn.R;
 import ua.opu.englishlearn.room.database.EnglishLearnDatabase;
 import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.main.MainActivity;
+import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class VocabularyFragment extends Fragment {
 
@@ -70,7 +71,6 @@ public class VocabularyFragment extends Fragment {
         ActionBar actionBar = Objects.requireNonNull(activity.getSupportActionBar());
 
 
-
 //        actionBar.setTitle(words.get(0).getEnglishTranslation());
         if (words.size() == 0) {
 //            actionBar.setTitle("dsafs");
@@ -93,11 +93,10 @@ public class VocabularyFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.vocabularyRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        EnglishLearnDatabase database = EnglishLearnDatabase.getInstance(requireContext());
-        Executors.newSingleThreadExecutor().execute(() -> {
-            words = database.wordDAO().getAll();
-            recyclerView.setAdapter(new VocabularyListAdapter(words));
-        });
+        EnglishLearnRepository repository = EnglishLearnRepository.getInstance(requireContext());
+        words = repository.getAllWords();
+        recyclerView.setAdapter(new VocabularyListAdapter(words));
+
 
         EditText searchEditText = view.findViewById(R.id.vocabularySearchEditText);
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -108,20 +107,16 @@ public class VocabularyFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count != 0) {
-                    String searchInput = s.toString();
-                    List<Word> searchResult = new ArrayList<>();
-                    for (Word word : words) {
-                        String regex = searchInput + ".*";
-                        if (word.getEnglishTranslation().matches(regex)) {
-                            searchResult.add(word);
-                        }
-                        VocabularyListAdapter searchResultAdapter = new VocabularyListAdapter(searchResult);
-                        recyclerView.setAdapter(searchResultAdapter);
+                String searchInput = s.toString();
+                List<Word> searchResult = new ArrayList<>();
+                for (Word word : words) {
+                    String regex = searchInput + ".*";
+                    if (word.getEnglishTranslation().matches(regex)) {
+                        searchResult.add(word);
                     }
-                } else {
-                    recyclerView.setAdapter(new VocabularyListAdapter(words));
                 }
+                VocabularyListAdapter searchResultAdapter = new VocabularyListAdapter(searchResult);
+                recyclerView.setAdapter(searchResultAdapter);
             }
 
             @Override
