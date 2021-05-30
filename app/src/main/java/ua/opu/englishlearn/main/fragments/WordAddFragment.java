@@ -1,9 +1,12 @@
 package ua.opu.englishlearn.main.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -49,6 +52,32 @@ public class WordAddFragment extends Fragment {
         words = repository.getAllWords();
         recyclerView.setAdapter(new WordAddListAdapter(words));
 
+        EditText searchEditText = view.findViewById(R.id.wordAddSearchEditText);
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchInput = s.toString();
+                List<Word> searchResult = new ArrayList<>();
+                for (Word word : words) {
+                    String regex = searchInput + ".*";
+                    if (word.getEnglishTranslation().matches(regex)) {
+                        searchResult.add(word);
+                    }
+                }
+                WordAddListAdapter searchResultAdapter = new WordAddListAdapter(searchResult);
+                recyclerView.setAdapter(searchResultAdapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     class WordAddListAdapter extends RecyclerView.Adapter<WordAddListAdapter.WordAddWordViewHolder> {
