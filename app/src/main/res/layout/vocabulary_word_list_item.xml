@@ -20,7 +20,7 @@
             android:background="@color/surfaceColor">
 
             <TextView
-                android:id="@+id/wordEnTranslation"
+                android:id="@+id/questionWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -40,8 +40,8 @@
                 android:textColor="@color/placeholderColor"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/wordEnTranslation"
-                app:layout_constraintTop_toBottomOf="@+id/wordEnTranslation"
+                app:layout_constraintStart_toStartOf="@+id/questionWord"
+                app:layout_constraintTop_toBottomOf="@+id/questionWord"
                 tools:text="яблоко" />
 
             <ImageButton

@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -187,7 +186,7 @@ public class VocabularyFragment extends Fragment {
             public VocabularyWordViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                englishTranslation = itemView.findViewById(R.id.wordEnTranslation);
+                englishTranslation = itemView.findViewById(R.id.questionWord);
                 russianTranslation = itemView.findViewById(R.id.wordRuTranslation);
                 deleteButton = itemView.findViewById(R.id.wordDeleteButton);
             }

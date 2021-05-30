@@ -11,4 +11,5 @@
     <string name="statistics_fragment_title">Statistics</string>
     <string name="word_add_fragment_title">New words</string>
     <string name="game_activity_title">Game</string>
+    <string name="question_fragment_title_text">Question: %d/%d</string>
 </resources>

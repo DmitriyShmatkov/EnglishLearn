@@ -143,7 +143,7 @@ public class WordAddFragment extends Fragment {
             public WordAddWordViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                englishTranslation = itemView.findViewById(R.id.wordEnTranslation);
+                englishTranslation = itemView.findViewById(R.id.questionWord);
                 russianTranslation = itemView.findViewById(R.id.wordRuTranslation);
                 addRemoveButton = itemView.findViewById(R.id.wordDeleteButton);
             }
