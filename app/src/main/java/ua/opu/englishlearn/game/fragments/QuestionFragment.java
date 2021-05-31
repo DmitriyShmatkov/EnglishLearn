@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,26 +21,25 @@ import java.util.List;
 import java.util.Objects;
 
 import ua.opu.englishlearn.R;
-import ua.opu.englishlearn.room.dataclasses.QuestionWithOptionsAndAnswer;
-import ua.opu.englishlearn.room.entities.Question;
+import ua.opu.englishlearn.game.GameActivity;
+import ua.opu.englishlearn.room.dataclasses.FullGame;
+import ua.opu.englishlearn.room.dataclasses.FullQuestion;
 import ua.opu.englishlearn.room.entities.Word;
 
 public class QuestionFragment extends Fragment {
 
     private int index;
     private ViewPager2 viewPager;
-
-    private Word correctAnswer;
-    private List<Word> options;
+    private FullGame fullGame;
+    ActionBar actionBar;
 
     public QuestionFragment() {
     }
 
-    public QuestionFragment(int index, ViewPager2 viewPager, Word correctAnswer, List<Word> options) {
+    public QuestionFragment(int index, ViewPager2 viewPager, FullGame fullGame) {
         this.index = index;
         this.viewPager = viewPager;
-        this.correctAnswer = correctAnswer;
-        this.options = options;
+        this.fullGame = fullGame;
     }
 
     @Override
@@ -58,11 +58,14 @@ public class QuestionFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         AppCompatActivity activity = Objects.requireNonNull((AppCompatActivity) getActivity());
-        ActionBar actionBar = Objects.requireNonNull(activity.getSupportActionBar());
+        actionBar = Objects.requireNonNull(activity.getSupportActionBar());
 
-        int questionsNumber = 5;
+        int questionsNumber = fullGame.getGame().getQuestionsNumber();
         TextView title = view.findViewById(R.id.questionFragmentTitle);
-        title.setText(String.format(getText(R.string.question_fragment_title_text).toString(), (index + 1), questionsNumber));
+        title.setText(String.format(getText(R.string.question_fragment_title_text).toString(), index + 1, questionsNumber));
+
+        Word correctAnswer = fullGame.getQuestions().get(index).getCorrectAnswer();
+        List<Word> options = fullGame.getQuestions().get(index).getOptions();
 
         TextView questionWord = view.findViewById(R.id.questionWord);
         questionWord.setText(correctAnswer.getRussianTranslation());
@@ -76,12 +79,25 @@ public class QuestionFragment extends Fragment {
         options.add(correctAnswer);
         Collections.shuffle(options);
         for (int i = 0; i < options.size(); i++) {
-            optionButtons.get(i).setText(options.get(i).getEnglishTranslation());
-            optionButtons.get(i).setOnClickListener(v -> nextQuestion());
+            Word word = options.get(i);
+            optionButtons.get(i).setText(word.getEnglishTranslation());
+            optionButtons.get(i).setOnClickListener(v -> next(word));
         }
     }
 
-    private void nextQuestion() {
+    private void next(Word userAnswer) {
+        FullQuestion fullQuestion = fullGame.getQuestions().get(index);
+        fullQuestion.setUserAnswer(userAnswer);
+        if (userAnswer.equals(fullQuestion.getCorrectAnswer())) {
+            fullGame.getGame().setCorrectAnswers(fullGame.getGame().getCorrectAnswers() + 1);
+        }
+        if (index == fullGame.getGame().getQuestionsNumber() - 1) {
+            GameActivity.GameViewPagerAdapter adapter = (GameActivity.GameViewPagerAdapter) viewPager.getAdapter();
+            GameResultFragment fragment = new GameResultFragment(fullGame);
+            adapter.addFragment(fragment);
+            adapter.notifyDataSetChanged();
+            actionBar.setTitle(R.string.game_result_fragment_title);
+        }
         viewPager.setCurrentItem(index + 1);
     }
 }

@@ -10,11 +10,13 @@ public class Question {
     private int questionId;
     private int correctAnswerId;
     private int userAnswerId;
+    private long gameId;
 
-    public Question(int questionId, int correctAnswerId, int userAnswerId) {
+    public Question(int questionId, int correctAnswerId, int userAnswerId, long gameId) {
         this.questionId = questionId;
         this.correctAnswerId = correctAnswerId;
         this.userAnswerId = userAnswerId;
+        this.gameId = gameId;
     }
 
     public int getQuestionId() {
@@ -39,5 +41,13 @@ public class Question {
 
     public void setUserAnswerId(int userAnswerId) {
         this.userAnswerId = userAnswerId;
+    }
+
+    public long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
     }
 }

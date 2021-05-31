@@ -12,4 +12,10 @@
     <string name="word_add_fragment_title">New words</string>
     <string name="game_activity_title">Game</string>
     <string name="question_fragment_title_text">Question: %d/%d</string>
+    <string name="game_result_fragment_title">Result</string>
+    <string name="game_result_title_text">Your result is</string>
+    <string name="game_result_mistakes_title_text">Mistakes</string>
+    <string name="game_result_menu_button_text">Finish</string>
+    <string name="game_result_points_text">%d/%d</string>
+    <string name="game_result_mistake_header">Question %d</string>
 </resources>

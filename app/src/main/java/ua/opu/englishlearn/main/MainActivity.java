@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, GameActivity.class);
             startActivity(intent);
         });
+
+//        deleteDatabase("english_learn_db.db");
     }
 
     public class MainViewPagerAdapter extends FragmentStateAdapter {

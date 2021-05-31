@@ -25,4 +25,8 @@
 
     <color name="searchFieldColor">#e0e0e0</color>
     <color name="placeholderColor">#a2a2a2</color>
+
+    <color name="good">#00ba00</color>
+    <color name="medium">#eb6d00</color>
+    <color name="bad">#b30000</color>
 </resources>

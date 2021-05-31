@@ -12,16 +12,16 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 
 import ua.opu.englishlearn.R;
+import ua.opu.englishlearn.game.fragments.GameResultFragment;
 import ua.opu.englishlearn.game.fragments.QuestionFragment;
-import ua.opu.englishlearn.room.dataclasses.QuestionWithOptionsAndAnswer;
-import ua.opu.englishlearn.room.entities.Question;
+import ua.opu.englishlearn.room.dataclasses.FullGame;
+import ua.opu.englishlearn.room.dataclasses.FullQuestion;
+import ua.opu.englishlearn.room.entities.Game;
 import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
@@ -47,22 +47,32 @@ public class GameActivity extends AppCompatActivity {
         repository = EnglishLearnRepository.getInstance(this);
 
         viewPager = findViewById(R.id.gameActivityViewPager);
-//        viewPager.setUserInputEnabled(false);
+        viewPager.setUserInputEnabled(false);
         GameViewPagerAdapter viewPagerAdapter = new GameViewPagerAdapter(this);
-        questionsNumber = 5;
+
+        questionsNumber = 4;
+        FullGame fullGame = new FullGame();
+        fullGame.setGame(new Game(questionsNumber, 0));
+        List<FullQuestion> fullQuestions = new ArrayList<>();
+        fullGame.setQuestions(fullQuestions);
+
         List<QuestionFragment> questionFragments = new ArrayList<>();
         List<Word> addedWords = repository.getAddedWords();
         List<Word> allWords = repository.getAllWords();
 
         Random random = new Random();
+
         List<Word> correctAnswers = new ArrayList<>();
-        List<List<Word>> optionsList = new ArrayList<>();
+
         while (correctAnswers.size() < questionsNumber) {
+            FullQuestion fullQuestion = new FullQuestion();
+
             // randomize unique added word for question
             Word correctAnswer;
             do {
                 correctAnswer = addedWords.get(random.nextInt(addedWords.size()));
             } while (correctAnswers.contains(correctAnswer));
+            fullQuestion.setCorrectAnswer(correctAnswer);
             correctAnswers.add(correctAnswer);
 
             // randomize options for question
@@ -74,14 +84,14 @@ public class GameActivity extends AppCompatActivity {
                 } while (options.contains(option) || option.equals(correctAnswer));
                 options.add(option);
             }
-            optionsList.add(options);
+            fullQuestion.setOptions(options);
 
             // create question fragment
+            fullGame.getQuestions().add(fullQuestion);
             QuestionFragment questionFragment = new QuestionFragment(
                     correctAnswers.size() - 1,
                     viewPager,
-                    correctAnswer,
-                    options
+                    fullGame
             );
             // add to list
             questionFragments.add(questionFragment);
@@ -96,9 +106,9 @@ public class GameActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    class GameViewPagerAdapter extends FragmentStateAdapter {
+    public class GameViewPagerAdapter extends FragmentStateAdapter {
 
-        private List<Fragment> viewPagerFragments;
+        public List<Fragment> viewPagerFragments;
 
         public GameViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
             super(fragmentActivity);

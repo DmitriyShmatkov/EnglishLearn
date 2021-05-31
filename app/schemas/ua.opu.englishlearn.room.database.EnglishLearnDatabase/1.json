@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8cd37a65f7a10322f23d05fc5546fe2f",
+    "identityHash": "610e884f239d2c4e5066d96e47c38e0e",
     "entities": [
       {
         "tableName": "Word",
@@ -44,7 +44,7 @@
       },
       {
         "tableName": "Question",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`questionId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `correctAnswerId` INTEGER NOT NULL, `userAnswerId` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`questionId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `correctAnswerId` INTEGER NOT NULL, `userAnswerId` INTEGER NOT NULL, `gameId` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "questionId",
@@ -61,6 +61,12 @@
           {
             "fieldPath": "userAnswerId",
             "columnName": "userAnswerId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -105,7 +111,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8cd37a65f7a10322f23d05fc5546fe2f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '610e884f239d2c4e5066d96e47c38e0e')"
     ]
   }
 }

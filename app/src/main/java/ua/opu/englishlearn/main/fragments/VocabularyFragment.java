@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,25 +90,25 @@ public class VocabularyFragment extends Fragment {
         repository = EnglishLearnRepository.getInstance(requireContext());
 
         /*List<Word> insertList = Arrays.asList(
-                new Word("apple", "яблоко", false),
-                new Word("orange", "апельсин", false),
-                new Word("banana", "банан", false),
-                new Word("pineapple", "ананас", false),
-                new Word("tomato", "помидор", false),
-                new Word("table", "стол", false),
-                new Word("sugar", "сахар", false),
+                new Word("apple", "яблоко", true),
+                new Word("orange", "апельсин", true),
+                new Word("banana", "банан", true),
+                new Word("pineapple", "ананас", true),
+                new Word("tomato", "помидор", true),
+                new Word("table", "стол", true),
+                new Word("sugar", "сахар", true),
                 new Word("chair", "стул", false),
                 new Word("pan", "сковорода", false),
-                new Word("sausage", "сосиска", false),
+                new Word("sausage", "сосиска", true),
                 new Word("milk", "молоко", false),
                 new Word("teeth", "зубы", false),
-                new Word("mouth", "рот", false),
+                new Word("mouth", "рот", true),
                 new Word("mouse", "мышь", false),
-                new Word("moist", "влажный", false),
+                new Word("moist", "влажный", true),
                 new Word("gate", "ворота", false),
                 new Word("bed", "кровать", false),
-                new Word("sofa", "диван", false),
-                new Word("pencil", "карандаш", false),
+                new Word("sofa", "диван", true),
+                new Word("pencil", "карандаш", true),
                 new Word("square", "квадрат", false)
         );
         repository.insertAllWords(insertList);*/
