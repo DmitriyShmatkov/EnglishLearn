@@ -5,7 +5,7 @@
     <solid android:color="@color/surfaceColor" />
     <stroke
         android:width="2dp"
-        android:color="@android:color/holo_green_light" />
+        android:color="@color/good" />
     <corners android:radius="16dp" />
     <padding
         android:bottom="4dp"

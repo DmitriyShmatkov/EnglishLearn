@@ -16,7 +16,7 @@
     <color name="secondaryDarkColor">#c79a00</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
-    <color name="backgroundColor">#fafafa</color>
+    <color name="backgroundColor">#f0f0f0</color>
     <color name="surfaceColor">#ffffff</color>
     <color name="errorColor">#b00020</color>
     <color name="backgroundTextColor">#000000</color>
@@ -27,6 +27,6 @@
     <color name="placeholderColor">#a2a2a2</color>
 
     <color name="good">#00ba00</color>
-    <color name="medium">#eb6d00</color>
-    <color name="bad">#b30000</color>
+    <color name="medium">#D67100</color>
+    <color name="bad">#df0000</color>
 </resources>

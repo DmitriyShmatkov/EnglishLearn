@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".90" />
+        app:layout_constraintGuide_percent=".95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".10" />
+        app:layout_constraintGuide_percent=".05" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -88,51 +88,49 @@
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/option1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/game_button_style"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
+            android:padding="20dp"
+            android:backgroundTint="@color/surfaceColor"
             app:cornerRadius="16dp"
-            tools:text="Orange" />
+            app:strokeColor="@color/placeholderColor"
+            app:strokeWidth="1dp"
+            tools:text="orange" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/option2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/game_button_style"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
             app:cornerRadius="16dp"
-            tools:text="table" />
+            tools:text="table"
+            android:padding="20dp"
+            android:backgroundTint="@color/surfaceColor"
+            app:strokeColor="@color/placeholderColor"
+            app:strokeWidth="1dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/option3"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/game_button_style"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
             app:cornerRadius="16dp"
-            tools:text="apple" />
+            tools:text="apple"
+            android:padding="20dp"
+            android:backgroundTint="@color/surfaceColor"
+            app:strokeColor="@color/placeholderColor"
+            app:strokeWidth="1dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/option4"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/game_button_style"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
             app:cornerRadius="16dp"
-            tools:text="pineapple" />
-
-
+            tools:text="pineapple"
+            android:padding="20dp"
+            android:backgroundTint="@color/surfaceColor"
+            app:strokeColor="@color/placeholderColor"
+            app:strokeWidth="1dp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
