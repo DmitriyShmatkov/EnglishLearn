@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "610e884f239d2c4e5066d96e47c38e0e",
+    "identityHash": "8d1cd81d9663f2c44f7f095fd77818d2",
     "entities": [
       {
         "tableName": "Word",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wordId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `englishTranslation` TEXT, `russianTranslation` TEXT, `isAdded` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wordId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `englishTranslation` TEXT, `russianTranslation` TEXT, `partOfSpeech` TEXT, `isAdded` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "wordId",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "russianTranslation",
             "columnName": "russianTranslation",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "partOfSpeech",
+            "columnName": "partOfSpeech",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -111,7 +117,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '610e884f239d2c4e5066d96e47c38e0e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d1cd81d9663f2c44f7f095fd77818d2')"
     ]
   }
 }

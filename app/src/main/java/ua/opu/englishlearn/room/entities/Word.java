@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.opencsv.bean.CsvBindByPosition;
+
 import java.util.Objects;
 
 @Entity
@@ -12,21 +14,33 @@ public class Word {
 
     @PrimaryKey(autoGenerate = true)
     private int wordId;
+
+    @CsvBindByPosition(position = 2)
     private String englishTranslation;
+
+    @CsvBindByPosition(position = 0)
     private String russianTranslation;
+    private String partOfSpeech;
     private boolean isAdded;
 
-    public Word(int wordId, String englishTranslation, String russianTranslation, boolean isAdded) {
+    @Ignore
+    public Word() {
+
+    }
+
+    public Word(int wordId, String englishTranslation, String russianTranslation, String partOfSpeech, boolean isAdded) {
         this.wordId = wordId;
         this.englishTranslation = englishTranslation;
         this.russianTranslation = russianTranslation;
+        this.partOfSpeech = partOfSpeech;
         this.isAdded = isAdded;
     }
 
     @Ignore
-    public Word(String englishTranslation, String russianTranslation, boolean isAdded) {
+    public Word(String englishTranslation, String russianTranslation, String partOfSpeech, boolean isAdded) {
         this.englishTranslation = englishTranslation;
         this.russianTranslation = russianTranslation;
+        this.partOfSpeech = partOfSpeech;
         this.isAdded = isAdded;
     }
 
@@ -60,6 +74,14 @@ public class Word {
 
     public void setAdded(boolean added) {
         isAdded = added;
+    }
+
+    public String getPartOfSpeech() {
+        return partOfSpeech;
+    }
+
+    public void setPartOfSpeech(String partOfSpeech) {
+        this.partOfSpeech = partOfSpeech;
     }
 
     @Override
