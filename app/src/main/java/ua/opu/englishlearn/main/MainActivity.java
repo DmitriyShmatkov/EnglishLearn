@@ -20,11 +20,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import ua.opu.englishlearn.R;
 import ua.opu.englishlearn.game.GameActivity;
 import ua.opu.englishlearn.main.fragments.StatisticsFragment;
 import ua.opu.englishlearn.main.fragments.VocabularyFragment;
+import ua.opu.englishlearn.room.database.EnglishLearnDatabase;
+import ua.opu.englishlearn.room.dataclasses.FullGame;
+import ua.opu.englishlearn.room.dataclasses.FullQuestion;
 import ua.opu.englishlearn.room.entities.Word;
 import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
@@ -38,7 +43,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        repopulateDatabase();
+        EnglishLearnRepository repository = EnglishLearnRepository.getInstance(this);
+        List<FullQuestion> fullQuestions = repository.getAllQuestions();
+        for (FullQuestion fullQuestion : fullQuestions) {
+            System.out.println(fullQuestion.toString());
+        }
+        System.out.println("--------------------------------------------------");
+        for (FullGame fullGame : repository.getAllGames()) {
+            System.out.println(fullGame);
+        }
+
+        /*Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> EnglishLearnDatabase.getInstance(this).clearAllTables());*/
+
+//        populateDatabase();
+
+//        deleteDatabase("english_learn_db.db");
 
         Toolbar toolbar = findViewById(R.id.mainActivityToolbar);
         setSupportActionBar(toolbar);
@@ -132,29 +152,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void repopulateDatabase() {
-//        deleteDatabase("english_learn_db.db");
+    private void populateDatabase() {
         EnglishLearnRepository repository = EnglishLearnRepository.getInstance(this);
-
-        /*StringBuilder stringBuilder = new StringBuilder();
-
-        try {
-            File myObj = new File("app\\src\\main\\java\\ua\\opu\\englishlearn\\main\\huy.txt");
-            Scanner myReader = new Scanner(myObj);
-            while (myReader.hasNextLine()) {
-                stringBuilder.append(myReader.nextLine()).append("\n");
-            }
-            myReader.close();
-            Toast.makeText(this, "File read", Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-            Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
-        }*/
 
         String allWordsString = "";
         try {
-            InputStream inputStream = getAssets().open("huy.txt");
+            InputStream inputStream = getAssets().open("dictionary.txt");
             int size = inputStream.available();
             byte[] buffer = new byte[size];
             inputStream.read(buffer);
@@ -164,18 +167,20 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "File not found!", Toast.LENGTH_SHORT).show();
         }
-//        String allWordsString = stringBuilder.toString();
 
         String[] allWordsArray = allWordsString.split("\n");
         List<Word> words = new ArrayList<>();
+        String trueString = allWordsArray[0].split(";")[3];
         for (String wordString : allWordsArray) {
             String[] parts = wordString.split(";");
             Word word = new Word(parts[0], parts[1], parts[2], false);
-            if (parts[3].equals("true")) {
+            if (parts[3].equals(trueString)) {
                 word.setAdded(true);
+                System.out.println(word);
             }
             words.add(word);
         }
+        words.remove(0);
 
         repository.insertAllWords(words);
     }

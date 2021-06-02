@@ -5,27 +5,28 @@ import androidx.room.Entity;
 @Entity(primaryKeys = {"questionId", "wordId"})
 public class QuestionWordCrossDef {
 
-    private int questionId;
-    private int wordId;
+    private long questionId;
+    private long wordId;
 
-    public QuestionWordCrossDef(int questionId, int wordId) {
+    public QuestionWordCrossDef(long questionId, long wordId) {
         this.questionId = questionId;
         this.wordId = wordId;
     }
 
-    public int getQuestionId() {
+
+    public long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
+    public void setQuestionId(long questionId) {
         this.questionId = questionId;
     }
 
-    public int getWordId() {
+    public long getWordId() {
         return wordId;
     }
 
-    public void setWordId(int wordId) {
+    public void setWordId(long wordId) {
         this.wordId = wordId;
     }
 }

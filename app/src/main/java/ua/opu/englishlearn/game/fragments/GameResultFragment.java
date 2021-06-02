@@ -18,12 +18,20 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ua.opu.englishlearn.R;
 import ua.opu.englishlearn.room.dataclasses.FullGame;
 import ua.opu.englishlearn.room.dataclasses.FullQuestion;
+import ua.opu.englishlearn.room.entities.Game;
+import ua.opu.englishlearn.room.entities.Question;
+import ua.opu.englishlearn.room.entities.QuestionWordCrossDef;
+import ua.opu.englishlearn.room.entities.Word;
+import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class GameResultFragment extends Fragment {
 
@@ -51,10 +59,11 @@ public class GameResultFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Game game = fullGame.getGame();
         fullQuestions = fullGame.getQuestions();
 
-        int questionsNumber = fullGame.getGame().getQuestionsNumber();
-        int correctNumber = fullGame.getGame().getCorrectAnswers();
+        int questionsNumber = game.getQuestionsNumber();
+        int correctNumber = game.getCorrectAnswers();
         double pointsRelation = (double) correctNumber / questionsNumber;
 
         TextView points = view.findViewById(R.id.game_result_points);
@@ -89,6 +98,43 @@ public class GameResultFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2,
                 GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+
+        EnglishLearnRepository repository = EnglishLearnRepository.getInstance(requireContext());
+
+        Date now = new Date();
+
+        game.setDate(new Date(now.getYear(), now.getMonth(), now.getDate()));
+        long gameId = repository.insertGame(game);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("\nGame ID: " + gameId);
+        for (FullQuestion fullQuestion : fullQuestions) {
+            Question question = new Question();
+            question.setCorrectAnswerId(fullQuestion.getCorrectAnswer().getWordId());
+            question.setUserAnswerId(fullQuestion.getUserAnswer().getWordId());
+            question.setGameId(gameId);
+
+            System.out.println(fullQuestion.getCorrectAnswer().getWordId());
+            System.out.println(fullQuestion.getUserAnswer().getWordId());
+            System.out.println(gameId);
+            long questionId = repository.insertQuestion(question);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Question ID: " + questionId);
+
+            for (Word word : fullQuestion.getOptions()) {
+                repository.insertQuestionWordCrossDef(
+                        new QuestionWordCrossDef(questionId, word.getWordId()));
+                System.out.println("Question ID: " + questionId);
+                System.out.println("Word ID: " + word.getWordId());
+            }
+        }
     }
 
     public class GameMistakesAdapter extends RecyclerView.Adapter<GameMistakesAdapter.MistakeCardViewHolder> {

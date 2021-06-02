@@ -1,45 +1,52 @@
 package ua.opu.englishlearn.room.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Question {
 
     @PrimaryKey(autoGenerate = true)
-    private int questionId;
-    private int correctAnswerId;
-    private int userAnswerId;
+    private long questionId;
+    private long correctAnswerId;
+    private long userAnswerId;
     private long gameId;
 
-    public Question(int questionId, int correctAnswerId, int userAnswerId, long gameId) {
+    @Ignore
+    public Question() {
+    }
+
+    public Question(long questionId, long correctAnswerId, long userAnswerId, long gameId) {
         this.questionId = questionId;
         this.correctAnswerId = correctAnswerId;
         this.userAnswerId = userAnswerId;
         this.gameId = gameId;
     }
 
-    public int getQuestionId() {
+
+    public long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(int questionId) {
+    public void setQuestionId(long questionId) {
         this.questionId = questionId;
     }
 
-    public int getCorrectAnswerId() {
+    public long getCorrectAnswerId() {
         return correctAnswerId;
     }
 
-    public void setCorrectAnswerId(int correctAnswerId) {
+    public void setCorrectAnswerId(long correctAnswerId) {
         this.correctAnswerId = correctAnswerId;
     }
 
-    public int getUserAnswerId() {
+    public long getUserAnswerId() {
         return userAnswerId;
     }
 
-    public void setUserAnswerId(int userAnswerId) {
+    public void setUserAnswerId(long userAnswerId) {
         this.userAnswerId = userAnswerId;
     }
 
@@ -49,5 +56,17 @@ public class Question {
 
     public void setGameId(long gameId) {
         this.gameId = gameId;
+    }
+
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Question{" +
+                "questionId=" + questionId +
+                ", correctAnswerId=" + correctAnswerId +
+                ", userAnswerId=" + userAnswerId +
+                ", gameId=" + gameId +
+                '}';
     }
 }

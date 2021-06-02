@@ -3,6 +3,7 @@ package ua.opu.englishlearn.room.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface GameDAO {
     @Insert
     long insert(Game game);
 
+    @Transaction
     @Query("SELECT * FROM Game")
     List<FullGame> getAll();
 }

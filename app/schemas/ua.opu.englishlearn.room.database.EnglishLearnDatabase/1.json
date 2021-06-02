@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8d1cd81d9663f2c44f7f095fd77818d2",
+    "identityHash": "c0344c01cbd0eaf6ef9200deec285c43",
     "entities": [
       {
         "tableName": "Word",
@@ -112,12 +112,50 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "Game",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`gameId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `questionsNumber` INTEGER NOT NULL, `correctAnswers` INTEGER NOT NULL, `date` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "gameId",
+            "columnName": "gameId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionsNumber",
+            "columnName": "questionsNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correctAnswers",
+            "columnName": "correctAnswers",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "gameId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d1cd81d9663f2c44f7f095fd77818d2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c0344c01cbd0eaf6ef9200deec285c43')"
     ]
   }
 }

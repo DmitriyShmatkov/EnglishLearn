@@ -21,7 +21,8 @@ public interface WordDAO {
     @Query("SELECT * FROM Word")
     List<Word> getAll();
 
-    @Query("SELECT * FROM Word WHERE isAdded = 1")
+    @Query("SELECT * FROM Word WHERE isAdded = 1 " +
+            "ORDER BY englishTranslation ASC")
     List<Word> getAdded();
 
     @Query("SELECT * FROM Word WHERE partOfSpeech = :partOfSpeech")

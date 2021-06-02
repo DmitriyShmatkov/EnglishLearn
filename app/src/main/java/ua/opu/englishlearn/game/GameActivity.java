@@ -33,7 +33,8 @@ import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class GameActivity extends AppCompatActivity {
 
-    public static int questionsNumber = 4;
+    public static int questionsNumber = 10;
+    public static int optionsNumber = 4;
 
     private ActionBar actionBar;
     private ViewPager2 viewPager;
@@ -100,7 +101,7 @@ public class GameActivity extends AppCompatActivity {
             List<Word> allOptions = wordsByPartsOfSpeech.get(correctAnswer.getPartOfSpeech());
             List<Integer> optionsIdx = new ArrayList<>();
 
-            while (fullQuestion.getOptions().size() < questionsNumber - 1) {
+            while (fullQuestion.getOptions().size() < optionsNumber - 1) {
                 int optionIdx;
                 Word option;
                 do {

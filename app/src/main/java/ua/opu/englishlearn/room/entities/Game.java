@@ -1,5 +1,6 @@
 package ua.opu.englishlearn.room.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -9,7 +10,7 @@ import java.util.Date;
 @Entity
 public class Game {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long gameId;
     private int questionsNumber;
     private int correctAnswers;
@@ -37,7 +38,6 @@ public class Game {
 
     @Ignore
     public Game() {
-
     }
 
     public long getGameId() {
@@ -70,5 +70,17 @@ public class Game {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", questionsNumber=" + questionsNumber +
+                ", correctAnswers=" + correctAnswers +
+                ", date=" + date +
+                '}';
     }
 }

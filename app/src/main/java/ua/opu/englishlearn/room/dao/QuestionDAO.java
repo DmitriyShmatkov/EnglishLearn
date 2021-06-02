@@ -5,6 +5,7 @@ import android.media.MediaCodec;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface QuestionDAO {
     @Insert
     long insert(Question question);
 
+    @Transaction
     @Query("SELECT * FROM Question")
     List<FullQuestion> getAll();
 }

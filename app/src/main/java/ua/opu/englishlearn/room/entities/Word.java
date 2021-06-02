@@ -1,5 +1,6 @@
 package ua.opu.englishlearn.room.entities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class Word {
 
     @PrimaryKey(autoGenerate = true)
-    private int wordId;
+    private long wordId;
 
     @CsvBindByPosition(position = 2)
     private String englishTranslation;
@@ -28,7 +29,7 @@ public class Word {
 
     }
 
-    public Word(int wordId, String englishTranslation, String russianTranslation, String partOfSpeech, boolean isAdded) {
+    public Word(long wordId, String englishTranslation, String russianTranslation, String partOfSpeech, boolean isAdded) {
         this.wordId = wordId;
         this.englishTranslation = englishTranslation;
         this.russianTranslation = russianTranslation;
@@ -44,11 +45,11 @@ public class Word {
         this.isAdded = isAdded;
     }
 
-    public int getWordId() {
+    public long getWordId() {
         return wordId;
     }
 
-    public void setWordId(int wordId) {
+    public void setWordId(long wordId) {
         this.wordId = wordId;
     }
 
@@ -90,5 +91,17 @@ public class Word {
         if (o == null || getClass() != o.getClass()) return false;
         Word word = (Word) o;
         return Objects.equals(englishTranslation, word.englishTranslation);
+    }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return "Word{" +
+                "wordId=" + wordId +
+                ", englishTranslation='" + englishTranslation + '\'' +
+                ", russianTranslation='" + russianTranslation + '\'' +
+                ", partOfSpeech='" + partOfSpeech + '\'' +
+                ", isAdded=" + isAdded +
+                '}';
     }
 }

@@ -46,7 +46,6 @@ public class FullQuestion {
 
     @Ignore
     public FullQuestion() {
-
     }
 
 
@@ -82,10 +81,14 @@ public class FullQuestion {
         this.userAnswer = userAnswer;
     }
 
-    @NonNull
+
     @Override
     public String toString() {
-        return "Correct: " + correctAnswer.getEnglishTranslation() +
-                "\nUser: " + userAnswer.getEnglishTranslation();
+        return "FullQuestion{" +
+                "question=" + question +
+                ", options=" + options +
+                ", correctAnswer=" + correctAnswer +
+                ", userAnswer=" + userAnswer +
+                '}';
     }
 }

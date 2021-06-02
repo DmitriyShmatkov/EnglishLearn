@@ -78,7 +78,7 @@ public class QuestionFragment extends Fragment {
         );
         options.add(correctAnswer);
         Collections.shuffle(options);
-        for (int i = 0; i < options.size(); i++) {
+        for (int i = 0; i < optionButtons.size(); i++) {
             Word word = options.get(i);
             optionButtons.get(i).setText(word.getEnglishTranslation());
             optionButtons.get(i).setOnClickListener(v -> next(word));
