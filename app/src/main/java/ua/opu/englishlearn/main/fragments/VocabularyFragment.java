@@ -35,6 +35,8 @@ public class VocabularyFragment extends Fragment {
     private MainActivity.MainViewPagerAdapter viewPagerAdapter;
     private List<Word> words = new ArrayList<>();
     private EnglishLearnRepository repository;
+    private VocabularyListAdapter vocabularyListAdapter;
+    private final VocabularyFragment vocabularyFragment = this;
 
     public VocabularyFragment() {
     }
@@ -114,7 +116,8 @@ public class VocabularyFragment extends Fragment {
         repository.insertAllWords(insertList);*/
 
         words = repository.getAddedWords();
-        recyclerView.setAdapter(new VocabularyListAdapter(words));
+        vocabularyListAdapter = new VocabularyListAdapter(words, this);
+        recyclerView.setAdapter(vocabularyListAdapter);
 
 
         EditText searchEditText = view.findViewById(R.id.vocabularySearchEditText);
@@ -127,15 +130,21 @@ public class VocabularyFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String searchInput = s.toString();
-                List<Word> searchResult = new ArrayList<>();
-                for (Word word : words) {
-                    String regex = searchInput + ".*";
-                    if (word.getEnglishTranslation().matches(regex)) {
-                        searchResult.add(word);
+                if (!searchInput.isEmpty()) {
+                    List<Word> searchResult = new ArrayList<>();
+                    for (Word word : words) {
+                        String regex = searchInput + ".*";
+                        if (word.getEnglishTranslation().matches(regex) ||
+                                word.getRussianTranslation().matches(regex)) {
+                            searchResult.add(word);
+                        }
                     }
+                    VocabularyListAdapter searchResultAdapter =
+                            new VocabularyListAdapter(searchResult, vocabularyFragment);
+                    recyclerView.setAdapter(searchResultAdapter);
+                } else {
+                    recyclerView.setAdapter(vocabularyListAdapter);
                 }
-                VocabularyListAdapter searchResultAdapter = new VocabularyListAdapter(searchResult);
-                recyclerView.setAdapter(searchResultAdapter);
             }
 
             @Override
@@ -148,9 +157,11 @@ public class VocabularyFragment extends Fragment {
     class VocabularyListAdapter extends RecyclerView.Adapter<VocabularyListAdapter.VocabularyWordViewHolder> {
 
         private final List<Word> words;
+        private VocabularyFragment vocabularyFragment;
 
-        public VocabularyListAdapter(List<Word> words) {
+        public VocabularyListAdapter(List<Word> words, VocabularyFragment vocabularyFragment) {
             this.words = words;
+            this.vocabularyFragment = vocabularyFragment;
         }
 
         @NonNull
@@ -170,6 +181,8 @@ public class VocabularyFragment extends Fragment {
                 repository.updateWord(word);
                 words.remove(word);
                 notifyDataSetChanged();
+                vocabularyFragment.words.remove(word);
+                vocabularyFragment.vocabularyListAdapter.notifyDataSetChanged();
             });
         }
 

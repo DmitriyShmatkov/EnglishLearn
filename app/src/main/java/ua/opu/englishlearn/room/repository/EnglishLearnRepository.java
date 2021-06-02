@@ -63,6 +63,33 @@ public class EnglishLearnRepository {
         }
     }
 
+    public List<Word> getWordsByPartOfSpeech(String partOfSpeech) {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<List<Word>> result = es.submit(() -> db.wordDAO().getByPartOfSpeech(partOfSpeech));
+        try {
+            return result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            es.shutdown();
+        }
+    }
+
+    public List<Word> getMatches(String regex) {
+        ExecutorService es = Executors.newSingleThreadExecutor();
+        Future<List<Word>> result = es.submit(() -> db.wordDAO().getMatches(regex));
+        try {
+            return result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            es.shutdown();
+        }
+    }
+
+
     public void deleteAllWords() {
         executor.execute(() -> db.wordDAO().deleteAll());
     }

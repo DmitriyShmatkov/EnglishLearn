@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,8 +50,7 @@ public class WordAddFragment extends Fragment {
         repository = EnglishLearnRepository.getInstance(requireContext());
         RecyclerView recyclerView = view.findViewById(R.id.wordAddRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        words = repository.getAllWords();
+        words = new ArrayList<>();
         recyclerView.setAdapter(new WordAddListAdapter(words));
 
         EditText searchEditText = view.findViewById(R.id.wordAddSearchEditText);
@@ -63,15 +63,13 @@ public class WordAddFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String searchInput = s.toString();
-                List<Word> searchResult = new ArrayList<>();
-                for (Word word : words) {
-                    String regex = searchInput + ".*";
-                    if (word.getEnglishTranslation().matches(regex)) {
-                        searchResult.add(word);
-                    }
+                if (!searchInput.isEmpty()) {
+                    List<Word> searchResult = repository.getMatches(searchInput + "%");
+                    WordAddListAdapter searchResultAdapter = new WordAddListAdapter(searchResult);
+                    recyclerView.setAdapter(searchResultAdapter);
+                } else {
+                    recyclerView.setAdapter(new WordAddListAdapter(new ArrayList<>()));
                 }
-                WordAddListAdapter searchResultAdapter = new WordAddListAdapter(searchResult);
-                recyclerView.setAdapter(searchResultAdapter);
             }
 
             @Override

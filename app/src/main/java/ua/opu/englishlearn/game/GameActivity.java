@@ -12,13 +12,19 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
 
 import ua.opu.englishlearn.R;
 import ua.opu.englishlearn.game.fragments.GameResultFragment;
 import ua.opu.englishlearn.game.fragments.QuestionFragment;
+import ua.opu.englishlearn.main.MainActivity;
 import ua.opu.englishlearn.room.dataclasses.FullGame;
 import ua.opu.englishlearn.room.dataclasses.FullQuestion;
 import ua.opu.englishlearn.room.entities.Game;
@@ -27,10 +33,11 @@ import ua.opu.englishlearn.room.repository.EnglishLearnRepository;
 
 public class GameActivity extends AppCompatActivity {
 
+    public static int questionsNumber = 4;
+
     private ActionBar actionBar;
     private ViewPager2 viewPager;
     EnglishLearnRepository repository;
-    private int questionsNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,6 @@ public class GameActivity extends AppCompatActivity {
         viewPager.setUserInputEnabled(false);
         GameViewPagerAdapter viewPagerAdapter = new GameViewPagerAdapter(this);
 
-        questionsNumber = 4;
         FullGame fullGame = new FullGame();
         fullGame.setGame(new Game(questionsNumber, 0));
         List<FullQuestion> fullQuestions = new ArrayList<>();
@@ -58,43 +64,58 @@ public class GameActivity extends AppCompatActivity {
 
         List<QuestionFragment> questionFragments = new ArrayList<>();
         List<Word> addedWords = repository.getAddedWords();
-        List<Word> allWords = repository.getAllWords();
 
         Random random = new Random();
 
+        List<Integer> correctAnswersIdx = new ArrayList<>();
         List<Word> correctAnswers = new ArrayList<>();
-
-        while (correctAnswers.size() < questionsNumber) {
+        Set<String> partsOfSpeech = new HashSet<>();
+        while (correctAnswersIdx.size() < questionsNumber) {
             FullQuestion fullQuestion = new FullQuestion();
 
             // randomize unique added word for question
-            Word correctAnswer;
+            int i;
             do {
-                correctAnswer = addedWords.get(random.nextInt(addedWords.size()));
-            } while (correctAnswers.contains(correctAnswer));
-            fullQuestion.setCorrectAnswer(correctAnswer);
-            correctAnswers.add(correctAnswer);
+                i = random.nextInt(addedWords.size());
+            } while (correctAnswersIdx.contains(i));
+            correctAnswersIdx.add(i);
 
-            // randomize options for question
-            List<Word> options = new ArrayList<>();
-            while (options.size() < 3) {
+            Word word = addedWords.get(i);
+            correctAnswers.add(word);
+            partsOfSpeech.add(word.getPartOfSpeech());
+
+            fullQuestion.setCorrectAnswer(word);
+            fullQuestion.setOptions(new ArrayList<>());
+            fullGame.getQuestions().add(fullQuestion);
+        }
+
+        Map<String, List<Word>> wordsByPartsOfSpeech = new HashMap<>();
+        for (String partOfSpeech : partsOfSpeech) {
+            wordsByPartsOfSpeech.put(partOfSpeech, repository.getWordsByPartOfSpeech(partOfSpeech));
+        }
+
+        int i = 0;
+        for (FullQuestion fullQuestion : fullGame.getQuestions()) {
+            Word correctAnswer = fullQuestion.getCorrectAnswer();
+            List<Word> allOptions = wordsByPartsOfSpeech.get(correctAnswer.getPartOfSpeech());
+            List<Integer> optionsIdx = new ArrayList<>();
+
+            while (fullQuestion.getOptions().size() < questionsNumber - 1) {
+                int optionIdx;
                 Word option;
                 do {
-                    option = allWords.get(random.nextInt(allWords.size()));
-                } while (options.contains(option) || option.equals(correctAnswer));
-                options.add(option);
+                    optionIdx = random.nextInt(allOptions.size());
+                    option = allOptions.get(optionIdx);
+                } while (optionsIdx.contains(optionIdx) || option.equals(correctAnswer));
+                optionsIdx.add(optionIdx);
+                fullQuestion.getOptions().add(option);
             }
-            fullQuestion.setOptions(options);
 
-            // create question fragment
-            fullGame.getQuestions().add(fullQuestion);
-            QuestionFragment questionFragment = new QuestionFragment(
-                    correctAnswers.size() - 1,
-                    viewPager,
-                    fullGame
-            );
+            QuestionFragment questionFragment = new QuestionFragment(i, viewPager, fullGame);
+
             // add to list
             questionFragments.add(questionFragment);
+            i++;
         }
 
         viewPagerAdapter.addAllFragments(questionFragments);

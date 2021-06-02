@@ -24,6 +24,13 @@ public interface WordDAO {
     @Query("SELECT * FROM Word WHERE isAdded = 1")
     List<Word> getAdded();
 
+    @Query("SELECT * FROM Word WHERE partOfSpeech = :partOfSpeech")
+    List<Word> getByPartOfSpeech(String partOfSpeech);
+
+    @Query("SELECT * FROM Word WHERE " +
+            "englishTranslation LIKE :regex OR russianTranslation LIKE :regex")
+    List<Word> getMatches(String regex);
+
     @Query("DELETE FROM Word")
     void deleteAll();
 
