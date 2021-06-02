@@ -17,6 +17,7 @@ public interface GameDAO {
     long insert(Game game);
 
     @Transaction
-    @Query("SELECT * FROM Game")
+    @Query("SELECT * FROM Game " +
+            "ORDER BY date DESC")
     List<FullGame> getAll();
 }

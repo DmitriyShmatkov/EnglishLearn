@@ -26,5 +26,7 @@
 
         <!-- Font family -->
         <item name="fontFamily">@font/maiandra_gd_regular</item>
+
+        <item name="elevationOverlayEnabled">false</item>
     </style>
 </resources>
